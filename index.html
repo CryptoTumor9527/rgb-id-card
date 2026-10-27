@@ -549,7 +549,7 @@ async function drawCard(p){
 const IDENTITIES={newbie:['egg','identity_newbie'],small:['tadpole','identity_small'],og:['frog','identity_og'],king:['king','identity_king'],
   watcher:['watcher','identity_watcher'],builder:['builder','identity_builder'],any:['any','identity_any']};
 // which identities each computed tier may pick (cumulative downward); default = the tier's own group
-const IDENT_BY_TIER={watcher:['watcher','builder','any'], egg:['newbie','builder','any'], tadpole:['newbie','small','builder','any'],
+const IDENT_BY_TIER={watcher:['watcher'], egg:['newbie','builder','any'], tadpole:['newbie','small','builder','any'],
   frog:['newbie','small','og','builder','any'], king:['newbie','small','og','king','builder','any']};
 let currentTier=null, identTouched=false;   // before generating: watcher set
 function fillIdent(){
