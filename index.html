@@ -520,7 +520,7 @@ async function drawCard(p){
   const lv=CONFIG.TIERS.findIndex(x=>x.key===p.tier.key), tname=(L.tiers||{})[p.tier.key]||p.tier.zh;
   const tag=lv<=0?tname:`${tname} · Lv.${lv}`, tw=mw(tag,fB(36));
   rr(c,345,420,345+tw+50,478,29); c.fillStyle=p.tier.color; c.fill();
-  tx(tag,370,425,fB(36),'#141414');
+  { c.font=fB(36); c.fillStyle='#141414'; c.textAlign='left'; c.textBaseline='alphabetic'; const m=c.measureText(tag); const a=m.actualBoundingBoxAscent||27, d=m.actualBoundingBoxDescent||6; c.fillText(tag,370,449+(a-d)/2); }
   if(p.pct) tx(p.pct,345,500,fR(28),GRAY);
   // rows
   let y=600; const vals=[p.since,p.days,p.range,p.asset,p.countdown];
