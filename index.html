@@ -426,7 +426,7 @@ async function holdingHistory(tk,hex,curRaw,onPage){
                   min(50, max(0, log10(amt/A0) / log10(A1/A0)) * 50), A0=100, A1=200,000 PPRGB, scaled by supply)
    score = timeScore + amountScore (0–100);  tiers: 蛙卵 <25 ≤ 蝌蚪 <50 ≤ 青蛙 <75 ≤ 蛙王;  balance 0 → 围观中   */
 function scoreOf(tk,amt,daysHeld,todayIdx,pct){
-  const span=Math.max(1,todayIdx-dateIdx(CONFIG.FLOOR_DATE));
+  const span=Math.max(1,todayIdx-dateIdx(CONFIG.FLOOR_DATE)+1);
   const k=tk.supply/tk.mult/CONFIG.PPRGB_SUPPLY||1;
   const a0=CONFIG.AMOUNT_A0*k,a1=CONFIG.AMOUNT_A1*k;
   const ts=daysHeld==null?0:Math.min(50,daysHeld/span*50);
@@ -638,7 +638,7 @@ async function generate(){
     let hist={first:null,start:null};
     if(raw>0) hist=await holdingHistory(tk,hex,raw,pg=>{ if(pg<0) setStatus('status_events_tail'); else setStatus('status_events',{page:pg}); setProg(Math.min(75,20+(pg<0?50:pg*5))); });
     const todayIdx=dayIndex(Date.now());
-    const daysHeld=hist.start?Math.max(0,todayIdx-dayIndex(hist.start)):null;
+    const daysHeld=hist.start?Math.max(1,todayIdx-dayIndex(hist.start)+1):null;  // buy day counts as day 1
     let pct=null;
     if(raw>0){setStatus('status_rank');setProg(85);try{pct=await percentile(tk,Number(rec.balance)||0);}catch(e){pct=null;}}
     const sc=scoreOf(tk,amt,daysHeld,todayIdx,pct);
